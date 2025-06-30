@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export default function App() {
   const [file, setFile] = useState(null);
+  const [policyFile, setPolicyFile] = useState(null);
   const [inputType, setInputType] = useState('');
   const [mode, setMode] = useState('pipeline');
   const [step, setStep] = useState('');
@@ -13,6 +14,11 @@ export default function App() {
     setFile(e.target.files[0]);
     setOutput({});
   };
+
+  const handlePolicyChange = (e) => {
+  setPolicyFile(e.target.files[0]);
+};
+
 
   const handleInputTypeChange = (e) => {
     setInputType(e.target.value);
@@ -30,6 +36,10 @@ export default function App() {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('input_type', inputType);
+    if (policyFile) {
+      formData.append('policy', policyFile);
+    }
+
 
     try {
       const isPipeline = mode === 'pipeline';
@@ -130,7 +140,7 @@ export default function App() {
             /> Custom Mode
           </label>
         </div>
-
+        
         {/* File Upload */}
         <div style={{
           display: 'flex',
@@ -139,11 +149,16 @@ export default function App() {
           flexWrap: 'wrap',
           marginBottom: '1.5rem'
         }}>
-          <div>
-            <label style={{ display: 'block', marginBottom: '0.3rem' }}>Upload BRD Document:</label>
-            <input type="file" onChange={handleFileChange} style={inputStyle} />
-          </div>
+        <div>
+          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Upload BRD Document:</label>
+          <input type="file" onChange={handleFileChange} style={inputStyle} />
         </div>
+        <div>
+          <label style={{ display: 'block', marginBottom: '0.3rem' }}>Upload Policy Document (Optional):</label>
+          <input type="file" onChange={handlePolicyChange} style={inputStyle} />
+        </div>
+      </div>
+
 
         {/* Dropdowns */}
         <div style={{
