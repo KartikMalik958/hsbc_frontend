@@ -72,6 +72,14 @@ export default function App() {
     setLoading(false);
   };
 
+  const contentTextStyle = {
+  fontFamily: 'Arial, sans-serif', // consistent font
+  fontSize: '1rem',                // consistent size (adjust if you prefer bigger/smaller)
+  whiteSpace: 'pre-wrap',          // keeps line breaks in both pre and p
+  lineHeight: '1.5'
+};
+
+
   const inputStyle = {
     padding: '0.5rem',
     backgroundColor: '#1f1f1f',
@@ -206,7 +214,7 @@ export default function App() {
             {output.summary && (
               <div style={{ marginBottom: '1rem' }}>
                 <h2 style={{ color: '#facc15' }}>Summary</h2>
-                <pre style={{ whiteSpace: 'pre-wrap' }}>{output.summary}</pre>
+                <pre style={contentTextStyle}>{output.summary}</pre>
               </div>
             )}
 
@@ -214,7 +222,9 @@ export default function App() {
               <div style={{ marginBottom: '1rem' }}>
                 <h2 style={{ color: '#facc15' }}>NFR Rules</h2>
                 {output.nfr_rules.map((r, i) => (
-                  <p key={i}>{typeof r === 'string' ? r : r.rule}</p>
+                  <p key={i} style={contentTextStyle}>
+                    {typeof r === 'string' ? r : r.rule}
+                  </p>
                 ))}
               </div>
             )}
@@ -223,7 +233,7 @@ export default function App() {
               <div style={{ marginBottom: '1rem' }}>
                 <h2 style={{ color: '#facc15' }}>Compliance Results</h2>
                 {output.compliance_results.map((r, i) => (
-                  <p key={i}>
+                  <p key={i} style={contentTextStyle}>
                     <strong>{r.rule}</strong> – <em>{r.status}</em>
                     {r.matched_with && ` (Matched with: ${r.matched_with}, Score: ${r.score})`}
                   </p>
@@ -235,7 +245,7 @@ export default function App() {
               <div style={{ marginBottom: '1rem' }}>
                 <h2 style={{ color: '#facc15' }}>Remediation Suggestions</h2>
                 {output.remediation_actions.map((action, i) => (
-                  <p key={i}>{action}</p>
+                  <p key={i} style={contentTextStyle}>{action}</p>
                 ))}
               </div>
             )}
